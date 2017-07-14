@@ -2,10 +2,10 @@
 <html lang="en">
 
 <!--================================================================================
-	Item Name: Materialize - Material Design Admin Template
-	Version: 1.0
-	Author: GeeksLabs
-	Author URL: http://www.themeforest.net/user/geekslabs
+  Item Name: Materialize - Material Design Admin Template
+  Version: 1.0
+  Author: GeeksLabs
+  Author URL: http://www.themeforest.net/user/geekslabs
 ================================================================================ -->
 
 <head>
@@ -61,21 +61,19 @@
                             <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="images/logo1.png" alt="materialize logo"></a> 
                             </h1>
                     <ul>
-                        <!--APENAS PARA A PÁGINA INICIAL-->
+                        <!--APENAS PARA A PÁGINA INICIAL
                         <li class="right">    
                             <i class="mdi-action-highlight-remove"></i></a>                         
                         </li>
-                        
-                        <!--PARA AS DEMAIS PÁGINAS
+                        -->
+                        <!--PARA AS DEMAIS PÁGINAS-->
                         <li>    
-                            <i class="mdi-navigation-chevron-left"></i></a>                         
+                            <a href="inicial.html"><i class="mdi-navigation-chevron-left"></i></a>                         
                         </li>
                         <li class="right">    
-                            <i class="mdi-action-home"></i></a>                         
+                            <a href="inicial.html"><i class="mdi-action-home"></i></a>                         
                         </li>
-                        -->
                         
-
                     </ul>
                 </div>
             </nav>
@@ -107,86 +105,9 @@
             
             <!--card stats start-->
             <div id="card-stats" class="seaction">
-              <center><h4 class="header">SELECIONE UMA OPÇÃO</h4></center>
-                
-                <div class="row">
-                            
-                            <div class="col s12">
-                                <div class="card">
-                                    <div class="card-content  teal white-text">
-                                    <a href="participantes.html">
-                                        <p class="card-stats-title"><i class="mdi-action-perm-identity"></i>  PARTICIPANTES </p>
-                                        <i class="right mdi-navigation-arrow-forward small"></i>
-
-                                    </a>    
-                                    </div>
-                                   
-                                </div>
-                            </div>
-               </div>
-
-
-               <div class="row">
-                            
-                            <div class="col s12">
-                                <div class="card">
-                                    <div class="card-content teal white-text">
-                                    <a href="palestras.html">
-                                        <p class="card-stats-title"><i class="mdi-av-mic-none"></i> PALESTRAS </p>
-                                        <i class="right mdi-navigation-arrow-forward small"></i>
-                                    </a>    
-                                    </div>
-                                   
-                                </div>
-                            </div>
-               </div>
-
-
-               <div class="row">
-                            
-                            <div class="col s12">
-                                <div class="card">
-                                    <div class="card-content teal white-text">
-                                    <a href="minicursos.html">
-                                        <p class="card-stats-title"><i class="mdi-av-my-library-books"></i> MINICURSOS </p>
-                                        <i class="right mdi-navigation-arrow-forward small"></i>
-                                    </a>    
-                                    </div>
-                                   
-                                </div>
-                            </div>
-               </div>
-
-
-               <div class="row">
-                            
-                            <div class="col s12">
-                                <div class="card">
-                                    <div class="card-content teal white-text">
-                                    <a href="visitas.html">
-                                        <p class="card-stats-title"><i class="mdi-maps-directions-bus"></i> VISITAS </p>
-                                        <i class="right mdi-navigation-arrow-forward small"></i>
-                                    </a>    
-                                    </div>
-                                   
-                                </div>
-                            </div>
-               </div>
-
-               <div class="row">
-                            
-                            <div class="col s12">
-                                <div class="card">
-                                    <div class="card-content teal white-text">
-                                    <a href="quartos.html">
-                                        <p class="card-stats-title"><i class="mdi-maps-local-hotel"></i> QUARTOS </p>
-                                        <i class="right mdi-navigation-arrow-forward small"></i>
-                                    </a>    
-                                    </div>
-                                   
-                                </div>
-                            </div>
-               </div>
+              <center><h4 class="header">SELECIONE UMA PALESTRA</h4></center>
+             
+               <div id="palestra"></div>
 
             </div>
             <!--card stats end-->
@@ -233,7 +154,57 @@
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="js/plugins.js"></script>
 
-    
+    <script type="text/javascript">
+      
+      var hashes;
+          hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&') + '';
+          id = hashes.split('=');
+          id = id[1];
+          if(id == "")
+          {
+            string = "inicial.html";
+            location.href = string;
+          }
+          $.ajax({
+              url: "http://www.eneeel.com/aplicativo/atividadesLista.php?id=" + 1, 
+              type: "POST",
+              crossDomain: true,
+              success: function(data) 
+              {
+                
+                teste = data.split(',');
+                console.log(teste);
+                string = "";
+                for (i = 0; i < 20; i++)
+                {
+
+
+                    string += "<div class='row'>";
+                    string += "<div class='col s12'>";
+                    string += "<div class='card'>";
+                    string += "<div class='card-content teal white-text'>";
+                    if (i<=9)
+                    {
+                      k = i+2;
+                      string += "<a href='atividades.html?id=PAL0"+ k + "'>";  
+                    }
+                    else
+                    {
+                      k = i+2;
+                      string += "<a href='atividades.html?id=PAL"+ k + "'>"; 
+                    }
+                    
+                    string += "<p class='card-stats-title'><i class='mdi-maps-local-hotel'></i> " + teste[i].slice(0, 10) +" ...</p>";
+                    string += "<i class='right mdi-navigation-arrow-forward small'></i>";
+                    string += "</a>";    
+                    string += "</div></div></div></div>";                                 
+                }
+                
+                  $('#palestra').replaceWith(string);
+                
+              }
+            });
+    </script>    
 
     
 </body>
